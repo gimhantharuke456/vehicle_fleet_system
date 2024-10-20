@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "144068615663",
+    "firebase_url": "https://vehicle-fleet-system-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "vehicle-fleet-system",
+    "storage_bucket": "vehicle-fleet-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144068615663:android:d324339457786861d6ea1a",
+        "android_client_info": {
+          "package_name": "com.example.ve"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz5_IB2lOZNskVcIcmELZDwSbDXGN5YeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
