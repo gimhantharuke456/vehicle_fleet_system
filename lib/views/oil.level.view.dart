@@ -18,7 +18,14 @@ class OilLevelView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData && !snapshot.hasError) {
             var event = snapshot.data as DatabaseEvent;
-            var oilLevel = event.snapshot.value as int? ?? 0;
+
+            double oilLevel = 0;
+
+            if (event.snapshot.exists) {
+              if (snapshot.data != null) {
+                oilLevel = double.parse(event.snapshot.value.toString());
+              }
+            }
             return Center(
               child: SizedBox(
                 width: 200,
@@ -27,7 +34,7 @@ class OilLevelView extends StatelessWidget {
                   painter: OilLevelPainter(oilLevel),
                   child: Center(
                     child: Text(
-                      'Oil Level\n$oilLevel',
+                      'Oil Level\n${oilLevel.toStringAsFixed(2)}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 24,
@@ -50,7 +57,7 @@ class OilLevelView extends StatelessWidget {
 }
 
 class OilLevelPainter extends CustomPainter {
-  final int oilLevel;
+  final double oilLevel;
 
   OilLevelPainter(this.oilLevel);
 
@@ -72,7 +79,7 @@ class OilLevelPainter extends CustomPainter {
 
     // Draw the oil level
     final fillPaint = Paint()
-      ..color = oilLevel <= 255 ? Colors.red : Colors.amber
+      ..color = oilLevel <= 120 ? Colors.red : Colors.amber
       ..style = PaintingStyle.fill;
 
     final fillHeight = (oilLevel / 500) * size.height;

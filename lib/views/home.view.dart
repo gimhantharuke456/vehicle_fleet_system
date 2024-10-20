@@ -24,50 +24,57 @@ class HomeView extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 32),
         width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(
+                "assets/bg.jpeg",
+              ),
+              fit: BoxFit.fill),
+        ),
         child: Wrap(
           alignment: WrapAlignment.center,
           children: [
             homeButton(
-              title: "Engine Oil Level",
-              onTap: () {
-                context.navigator(context, const OilLevelView());
-              },
-              color: getRandomColor(buttonColors),
-              context: context,
-            ),
+                title: "Engine Oil Level",
+                onTap: () {
+                  context.navigator(context, const OilLevelView());
+                },
+                color: getRandomColor(buttonColors),
+                context: context,
+                imageUrl: "img3.jpeg"),
             homeButton(
-              title: "Battery Voltage",
-              onTap: () {
-                context.navigator(context, const BatteryVoltageView());
-              },
-              color: getRandomColor(buttonColors),
-              context: context,
-            ),
+                title: "Battery Voltage",
+                onTap: () {
+                  context.navigator(context, const BatteryVoltageView());
+                },
+                color: getRandomColor(buttonColors),
+                context: context,
+                imageUrl: "img4.jpeg"),
             homeButton(
-              title: "Map",
-              onTap: () {
-                context.navigator(context, const AppMapView());
-              },
-              color: getRandomColor(buttonColors),
-              context: context,
-            ),
+                title: "Map",
+                onTap: () {
+                  context.navigator(context, const AppMapView());
+                },
+                color: getRandomColor(buttonColors),
+                context: context,
+                imageUrl: "img1.jpeg"),
             homeButton(
-              title: "Maintenance",
-              onTap: () {
-                context.navigator(context, const MaintananceView());
-              },
-              color: getRandomColor(buttonColors),
-              context: context,
-            ),
+                title: "Maintenance",
+                onTap: () {
+                  context.navigator(context, const MaintananceView());
+                },
+                color: getRandomColor(buttonColors),
+                context: context,
+                imageUrl: "img2.jpeg"),
             homeButton(
-              title: "Vehicle Emission",
-              onTap: () {
-                context.navigator(context, const VehicleEmissionView());
-                ;
-              },
-              color: getRandomColor(buttonColors),
-              context: context,
-            ),
+                title: "Vehicle Emission",
+                onTap: () {
+                  context.navigator(context, const VehicleEmissionView());
+                  ;
+                },
+                color: getRandomColor(buttonColors),
+                context: context,
+                imageUrl: "image5.png"),
           ],
         ),
       ),
@@ -85,6 +92,7 @@ class HomeView extends StatelessWidget {
     required VoidCallback onTap,
     required Color color,
     required BuildContext context,
+    required String imageUrl,
   }) {
     return InkWell(
       onTap: onTap,
@@ -97,13 +105,18 @@ class HomeView extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         margin: const EdgeInsets.all(8),
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+        child: Column(
+          children: [
+            Expanded(child: Image.asset("assets/$imageUrl")),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

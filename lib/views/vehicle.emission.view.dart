@@ -11,12 +11,14 @@ class VehicleEmissionView extends StatefulWidget {
 class _VehicleEmissionViewState extends State<VehicleEmissionView> {
   final DatabaseReference _databaseReference =
       FirebaseDatabase.instance.ref('vehicle_sensors');
-  int? methanePPM;
+  double? methanePPM;
+  double? coPPM;
 
   @override
   void initState() {
     super.initState();
     _fetchMethanePPM();
+    _fetchCOPPM();
   }
 
   void _fetchMethanePPM() {
@@ -27,7 +29,18 @@ class _VehicleEmissionViewState extends State<VehicleEmissionView> {
       final dynamic value = event.snapshot.value;
       if (value != null) {
         setState(() {
-          methanePPM = value as int;
+          methanePPM = (value / 1.0) as double;
+        });
+      }
+    });
+  }
+
+  void _fetchCOPPM() {
+    _databaseReference.child('coPPM').onValue.listen((DatabaseEvent event) {
+      final dynamic value = event.snapshot.value;
+      if (value != null) {
+        setState(() {
+          coPPM = (value / 1.0) as double;
         });
       }
     });
@@ -42,20 +55,44 @@ class _VehicleEmissionViewState extends State<VehicleEmissionView> {
       body: Center(
         child: methanePPM == null
             ? const CircularProgressIndicator()
-            : Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                decoration: BoxDecoration(
-                  color: methanePPM! > 3000 ? Colors.green : Colors.red,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  'Methane PPM: $methanePPM',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    color: Colors.white, // Set text color to white
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 40),
+                    decoration: BoxDecoration(
+                      color: methanePPM! > 3000 ? Colors.green : Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'Methane PPM: $methanePPM',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white, // Set text color to white
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 40),
+                    decoration: BoxDecoration(
+                      color: coPPM! > 3000 ? Colors.green : Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      'CO PPM: ${coPPM?.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        color: Colors.white, // Set text color to white
+                      ),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
